@@ -1,0 +1,193 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+// CAMERA PORTION NOT WORKING
+public class GameMgr : MonoBehaviour {
+    public const int Player_Box = 0;
+    public const int Player_LetterL = 1;
+    public const int Player_Staircase = 2;
+    public int currentPlayer = Player_Box;
+    public MoveCube moveCube;
+    public Move_Staircase moveStair;
+    public Move_Letter_L moveL;
+    public GameObject Box;
+    public GameObject L;
+    public GameObject Stair;
+    // Change parent of camera   DO shift up down left right for camera thing
+    // chnage orientation on botton press.
+    public GameObject FPSCamera;
+
+    private void Start()
+    {
+
+        currentPlayer = Player_Box;
+        moveCube._particleSystem.Play();
+        moveStair.__particleSystem.Stop();
+        moveL.___particleSystem.Stop();
+        FPSCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        Box = GameObject.FindGameObjectWithTag("Player");
+        L = GameObject.FindGameObjectWithTag("Player2");
+        Stair = GameObject.FindGameObjectWithTag("Player3");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            currentPlayer = Player_Box;
+            moveCube._particleSystem.Play();
+            moveStair.__particleSystem.Stop();
+            moveL.___particleSystem.Stop();
+            FPSCamera.transform.parent = Box.transform;
+            FPSCamera.transform.position = Box.transform.position;
+            
+
+
+            /// this is where the parent of the FPS camera is changed.
+
+            // Debug.Log("currentPlayer = " + currentPlayer);
+        }
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            currentPlayer = Player_LetterL;
+            moveCube._particleSystem.Stop();
+            moveL.___particleSystem.Play();
+            moveStair.__particleSystem.Stop();
+            FPSCamera.transform.parent = L.transform;
+            FPSCamera.transform.position = L.transform.position;
+
+            // Debug.Log("currentPlayer = " + currentPlayer);
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            currentPlayer = Player_Staircase;
+            moveCube._particleSystem.Stop();
+            moveStair.__particleSystem.Play();
+            moveL.___particleSystem.Stop();
+            FPSCamera.transform.parent = Stair.transform;
+            FPSCamera.transform.position = Stair.transform.position;
+
+            // Debug.Log("currentPlayer = " + currentPlayer);
+        }
+       }
+
+
+
+    /*
+
+    public int speed;
+    private float distToGround;
+    public float jumpSpeed;
+    private Rigidbody rb;
+    private int count;
+
+
+    void Start()
+    {
+        distToGround = GetComponent<Collider>().bounds.extents.y;
+        rb = GetComponent<Rigidbody>();
+        count = 0;
+    }
+
+
+    public bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, (float)(distToGround + .6));
+    }
+
+    public bool IsMoving()
+    {
+        if (GetComponent<Rigidbody>().velocity.magnitude > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            currentPlayer = Player_Box;
+        }
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            currentPlayer = Player_LetterL;
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            currentPlayer = Player_Staircase;
+        }
+
+        if (currentPlayer == Player_Box)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+            rb.AddForce(movement * speed);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (IsGrounded())
+                {
+                    GetComponent<Rigidbody>().velocity = Vector3.up * jumpSpeed;
+                }
+                else if (!IsMoving() && !IsGrounded())
+                {
+                    GetComponent<Rigidbody>().velocity = Vector3.up * jumpSpeed;
+                }
+            }
+        }
+
+        else if (currentPlayer == Player_LetterL)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+            rb.AddForce(movement * speed);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (IsGrounded())
+                {
+                    GetComponent<Rigidbody>().velocity = Vector3.up * jumpSpeed;
+                }
+                else if (!IsMoving() && !IsGrounded())
+                {
+                    GetComponent<Rigidbody>().velocity = Vector3.up * jumpSpeed;
+                }
+            }
+        }
+
+        else if (currentPlayer == Player_Staircase)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+            rb.AddForce(movement * speed);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (IsGrounded())
+                {
+                    GetComponent<Rigidbody>().velocity = Vector3.up * jumpSpeed;
+                }
+                else if (!IsMoving() && !IsGrounded())
+                {
+                    GetComponent<Rigidbody>().velocity = Vector3.up * jumpSpeed;
+                }
+            }
+        }
+
+
+    }
+
+    */
+
+}
+
+
+
+
+
