@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 // CAMERA PORTION NOT WORKING
 public class GameMgr : MonoBehaviour {
@@ -17,6 +18,13 @@ public class GameMgr : MonoBehaviour {
     // chnage orientation on botton press.
     public GameObject FPSCamera;
 
+    public int count;
+    public int countUp;
+    public Text StarText;
+    public Text WinText;
+    public Text UpText;
+
+
     private void Start()
     {
 
@@ -32,6 +40,7 @@ public class GameMgr : MonoBehaviour {
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.U))
         {
             currentPlayer = Player_Box;
@@ -40,8 +49,12 @@ public class GameMgr : MonoBehaviour {
             moveL.___particleSystem.Stop();
             FPSCamera.transform.parent = Box.transform;
             FPSCamera.transform.position = Box.transform.position;
-            
-
+            FPSCamera.transform.rotation = Box.transform.rotation;
+            /*
+            float yRotation = moveCube.transform.eulerAngles.y;
+            float xRotation = moveCube.transform.eulerAngles.x;
+            float zRotation = moveCube.transform.eulerAngles.z;
+            FPSCamera.transform.rotation = new Quaternion(xRotation,yRotation,zRotation);*/
 
             /// this is where the parent of the FPS camera is changed.
 
@@ -55,8 +68,12 @@ public class GameMgr : MonoBehaviour {
             moveStair.__particleSystem.Stop();
             FPSCamera.transform.parent = L.transform;
             FPSCamera.transform.position = L.transform.position;
-
-            // Debug.Log("currentPlayer = " + currentPlayer);
+            FPSCamera.transform.rotation = L.transform.rotation;
+            /*
+            float yRotation = moveL.transform.eulerAngles.y;
+            float xRotation = moveL.transform.eulerAngles.x;
+            float zRotation = moveL.transform.eulerAngles.z;
+            // Debug.Log("currentPlayer = " + currentPlayer);*/
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {
@@ -67,11 +84,38 @@ public class GameMgr : MonoBehaviour {
             FPSCamera.transform.parent = Stair.transform;
             FPSCamera.transform.position = Stair.transform.position;
 
+            FPSCamera.transform.rotation = Stair.transform.rotation;
+            float a = FPSCamera.transform.position.x; 
+            float b = FPSCamera.transform.position.y;
+            float c = FPSCamera.transform.position.z;
+
+            FPSCamera.transform.position = new Vector3(a+0, b+3, c-3);
+            
+            /*
+            float yRotation = moveStair.transform.eulerAngles.y;
+            float xRotation = moveStair.transform.eulerAngles.x;
+            float zRotation = moveStair.transform.eulerAngles.z;
+            */
             // Debug.Log("currentPlayer = " + currentPlayer);
         }
-       }
 
 
+
+    }
+    public void SetCountText()
+    {
+        StarText.text = "         " + count.ToString();
+    }
+
+    public void SetCountTextUp()
+    {
+        UpText.text = "         " + countUp.ToString();
+    }
+
+    public void SetCountWinText()
+    {
+        WinText.text = "You Win!";
+    }
 
     /*
 

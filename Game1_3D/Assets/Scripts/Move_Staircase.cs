@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Move_Staircase : MonoBehaviour
-{
+{     // Get rotation for correct camera position
 
     public GameMgr gameMgr;
     public float speed;
     public float jumpSpeed;
 
     private float distToGround;
-
+    //public Text text;
     private Rigidbody rb;
     private int count;
+    private int countUp;
     public ParticleSystem __particleSystem;
+    public float rotationSpeed = 100.0f;
+    private float yStair;
 
     void Start()
     {
@@ -21,6 +24,8 @@ public class Move_Staircase : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         count = 0;
         __particleSystem = GetComponentInChildren<ParticleSystem>();
+        yStair = rb.position.y;
+       // SetCountText();
     }
 
     public bool IsGrounded()
@@ -44,17 +49,56 @@ public class Move_Staircase : MonoBehaviour
         {
             return;
         }
+        
+        if (Input.GetKeyDown(KeyCode.Space)) /// maybe add while not moving to stop clipping issue.
+        {
+            float rotation = Input.GetAxis("Horizontal");
+            //rotation *= Time.deltaTime;
+            rotation += 90;
+            transform.Rotate(0, rotation, 0);
+        }
+        float translation = Input.GetAxis("Vertical") * speed;
+        translation *= Time.deltaTime;
+        transform.Translate(0, 0, translation);
+        Vector3 movement = new Vector3(0.0f, 0.0f, translation);
 
-        float dt = Time.deltaTime;
-        float dx = Input.GetAxis("Horizontal"); // left/right arrow keys (AD keys)
-        float dz = Input.GetAxis("Vertical");   // up/down arrow keys (WS keys)
-                                                // The values of x and z are between -1.0 and 1.0
-                                                // Debug.Log(string.Format("x={0,4}  z={1,4}", x, z));
-        float x = transform.position.x;
-        float z = transform.position.z;
-        x += speed * dt * dx;
-        z += speed * dt * dz;
-        transform.position = new Vector3(x, 0.5f, z);
+        float translation2 = Input.GetAxis("Horizontal") * speed;
+        translation2 *= Time.deltaTime;
+        transform.Translate(translation2, 0, 0);
+        Vector3 movement2 = new Vector3(translation2, 0.0f, 0.0f);
+
 
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Pick Up"))
+        {
+            other.gameObject.SetActive(false);
+            gameMgr.count = gameMgr.count + 1;
+            //  Debug.Log("Star: " + count);
+            gameMgr.SetCountText();
+
+        }
+
+        if (other.gameObject.CompareTag("1Up"))
+        {
+            other.gameObject.SetActive(false);
+            gameMgr.countUp = gameMgr.countUp + 1;
+            //  Debug.Log("1Up: " + countUp);
+            gameMgr.SetCountTextUp();
+
+        }
+
+    }
+    /*
+    void SetCountText()
+    {
+       // countText.text = "Count: " + count.ToString();
+    }
+
+    void SetCountText()
+    {
+       // countText.text = "Count: " + count.ToString();
+    }*/
 }

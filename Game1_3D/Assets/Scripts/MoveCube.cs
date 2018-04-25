@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+//HUD, Sound, Particle effect, Score
 public class MoveCube : MonoBehaviour
-{
+{   // get rotaiton for correct camera positoin
     public GameMgr gameMgr;
 
     private float distToGround;
     public float speed;
     public float jumpSpeed;
-    
+
+    //float yRotation = cameraParent.transform.eulerAngles.y;
 
     private Rigidbody rb;
-    private int count;
+    // private int count;
+    // private int countUp;
     public ParticleSystem _particleSystem;
     public float rotationSpeed = 100.0f;
+    private float yCube;
 
+    // public Text StarText;
+    // public Text UpText;
 
 
 
@@ -23,8 +28,9 @@ public class MoveCube : MonoBehaviour
     {
         distToGround = GetComponent<Collider>().bounds.extents.y;
         rb = GetComponent<Rigidbody>();
-        count = 0;
+        gameMgr.count = 0;
         _particleSystem = GetComponentInChildren<ParticleSystem>();
+        yCube = rb.position.y;
     }
 
     public bool IsGrounded()
@@ -65,7 +71,7 @@ public class MoveCube : MonoBehaviour
         }
 
 
-       // rb.AddForce(translation * speed);
+        // rb.AddForce(translation * speed);
 
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -80,5 +86,33 @@ public class MoveCube : MonoBehaviour
             }
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Pick Up"))
+        {
+            other.gameObject.SetActive(false);
+            gameMgr.count = gameMgr.count + 1;
+            //  Debug.Log("Star: " + count);
+            gameMgr.SetCountText();
+
+        }
+
+        if (other.gameObject.CompareTag("1Up"))
+        {
+            other.gameObject.SetActive(false);
+            gameMgr.countUp = gameMgr.countUp + 1;
+            //  Debug.Log("1Up: " + countUp);
+            gameMgr.SetCountTextUp();
+
+        }
+
+        if (other.gameObject.CompareTag("Ending"))
+        {
+            gameMgr.SetCountWinText();
+        }
+
+    }
+
 
 }
