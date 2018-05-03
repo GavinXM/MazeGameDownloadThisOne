@@ -79,10 +79,12 @@ public class MoveCube : MonoBehaviour
             if (IsGrounded())
             {
                 rb.velocity = Vector3.up * jumpSpeed;
+                gameMgr.audioSource.Play();
             }
             else if (!IsMoving() && !IsGrounded())
             {
                 rb.velocity = Vector3.up * jumpSpeed;
+                gameMgr.audioSource.Play();
             }
         }
     }
@@ -95,6 +97,7 @@ public class MoveCube : MonoBehaviour
             gameMgr.count = gameMgr.count + 1;
             //  Debug.Log("Star: " + count);
             gameMgr.SetCountText();
+            gameMgr.pick.Play();
 
         }
 
@@ -104,12 +107,16 @@ public class MoveCube : MonoBehaviour
             gameMgr.countUp = gameMgr.countUp + 1;
             //  Debug.Log("1Up: " + countUp);
             gameMgr.SetCountTextUp();
+            gameMgr.pick.Play();
 
         }
 
         if (other.gameObject.CompareTag("Ending"))
         {
             gameMgr.SetCountWinText();
+            gameMgr.winB.enabled = true;
+            gameMgr.winB2.enabled = true;
+            gameMgr.finish.Play();
         }
 
     }

@@ -23,11 +23,24 @@ public class GameMgr : MonoBehaviour {
     public Text StarText;
     public Text WinText;
     public Text UpText;
+    public RawImage winB;
+    public RawImage winB2;
+    public RawImage start;
+    public Text startText;
+    public AudioSource audioSource;
+    public AudioSource res;
+    public AudioSource pick;
+    public AudioSource finish;
+    public AudioSource switch22;
+
 
 
     private void Start()
     {
-
+        startText.enabled = true;
+        winB.enabled = false;
+        winB2.enabled = false;
+        start.enabled = true;
         currentPlayer = Player_Box;
         moveCube._particleSystem.Play();
         moveStair.__particleSystem.Stop();
@@ -40,9 +53,17 @@ public class GameMgr : MonoBehaviour {
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            startText.enabled = false;
+            start.enabled = false;
+        }
 
         if (Input.GetKeyDown(KeyCode.U))
         {
+            switch22.Play();
+            startText.enabled = false;
+            start.enabled = false;
             currentPlayer = Player_Box;
             moveCube._particleSystem.Play();
             moveStair.__particleSystem.Stop();
@@ -50,6 +71,12 @@ public class GameMgr : MonoBehaviour {
             FPSCamera.transform.parent = Box.transform;
             FPSCamera.transform.position = Box.transform.position;
             FPSCamera.transform.rotation = Box.transform.rotation;
+
+            float a3 = FPSCamera.transform.position.x;
+            float b3 = FPSCamera.transform.position.y;
+            float c3 = FPSCamera.transform.position.z;
+
+            FPSCamera.transform.position = new Vector3(a3 + 0, b3 + 2, c3 - 3);
             /*
             float yRotation = moveCube.transform.eulerAngles.y;
             float xRotation = moveCube.transform.eulerAngles.x;
@@ -62,6 +89,9 @@ public class GameMgr : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.I))
         {
+            switch22.Play();
+            startText.enabled = false;
+            start.enabled = false;
             currentPlayer = Player_LetterL;
             moveCube._particleSystem.Stop();
             moveL.___particleSystem.Play();
@@ -69,6 +99,12 @@ public class GameMgr : MonoBehaviour {
             FPSCamera.transform.parent = L.transform;
             FPSCamera.transform.position = L.transform.position;
             FPSCamera.transform.rotation = L.transform.rotation;
+
+            float a2 = FPSCamera.transform.position.x;
+            float b2 = FPSCamera.transform.position.y;
+            float c2 = FPSCamera.transform.position.z;
+
+            FPSCamera.transform.position = new Vector3(a2 - 0, b2 + 2, c2 + 2);
             /*
             float yRotation = moveL.transform.eulerAngles.y;
             float xRotation = moveL.transform.eulerAngles.x;
@@ -77,6 +113,9 @@ public class GameMgr : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {
+            switch22.Play();
+            startText.enabled = false;
+            start.enabled = false;
             currentPlayer = Player_Staircase;
             moveCube._particleSystem.Stop();
             moveStair.__particleSystem.Play();
@@ -116,6 +155,7 @@ public class GameMgr : MonoBehaviour {
     {
         WinText.text = "You Win!";
     }
+
 
     /*
 

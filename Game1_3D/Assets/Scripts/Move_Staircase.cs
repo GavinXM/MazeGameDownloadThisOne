@@ -52,10 +52,12 @@ public class Move_Staircase : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space)) /// maybe add while not moving to stop clipping issue.
         {
+            
             float rotation = Input.GetAxis("Horizontal");
             //rotation *= Time.deltaTime;
             rotation += 90;
             transform.Rotate(0, rotation, 0);
+            gameMgr.audioSource.Play();
         }
         float translation = Input.GetAxis("Vertical") * speed;
         translation *= Time.deltaTime;
@@ -78,6 +80,7 @@ public class Move_Staircase : MonoBehaviour
             gameMgr.count = gameMgr.count + 1;
             //  Debug.Log("Star: " + count);
             gameMgr.SetCountText();
+            gameMgr.pick.Play();
 
         }
 
@@ -87,6 +90,7 @@ public class Move_Staircase : MonoBehaviour
             gameMgr.countUp = gameMgr.countUp + 1;
             //  Debug.Log("1Up: " + countUp);
             gameMgr.SetCountTextUp();
+            gameMgr.pick.Play();
 
         }
 
